@@ -4,6 +4,7 @@
 # 필요 패키지
 # pip install bs4  
 # pip install lxml
+# pip install selenium
 #
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -12,7 +13,7 @@ from cgv_crawling_handler import CgvCrawlingHandler
 
 #각 크롬 드라이버 위치로 설정
 # driver_path = '/usr/local/bin/chromedriver' #아이맥
-driver_path = '/srv/www/server/crawling/chromedriver' #server
+driver_path = '/srv/www/server/chromedriver' #server
 
 # driver_path = 'C:/Users/kshzg/_development/chromedriver' #델
 
