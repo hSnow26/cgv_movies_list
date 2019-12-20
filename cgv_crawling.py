@@ -8,12 +8,13 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import cgv_crawling_handler
-from cgv_crawling_handler import *
+from cgv_crawling_handler import CgvCrawlingHandler
 
 #각 크롬 드라이버 위치로 설정
 # driver_path = '/usr/local/bin/chromedriver' #아이맥
+driver_path = '/srv/www/server/crawling/chromedriver' #server
 
-driver_path = 'C:/Users/kshzg/_development/chromedriver' #델
+# driver_path = 'C:/Users/kshzg/_development/chromedriver' #델
 
 
 # movies_url = 'http://section.cgv.co.kr/theater/popup/r_MovieTimeTable.aspx'
@@ -25,10 +26,12 @@ theaters_url = 'http://www.cgv.co.kr/reserve/show-times/' #영화관 목록
 # headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36'}
 headers = 'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
 
-driver = init_driver(driver_path, headers)
-movie_list_html = get_url_info(driver, movies_url)
+handler = CgvCrawlingHandler()
+
+driver = handler.init_driver(driver_path, headers)
+movie_list_html = handler.get_url_info(driver, movies_url)
 # print('user-agent : ', driver.find_element_by_css_selector('#user-agent').text)
-get_text(movie_list_html, '#movie_list > div.viewport > div > ul > li > a > strong')
+handler.get_text(movie_list_html, '#movie_list > div.viewport > div > ul > li > a > strong')
 
 # theater_list_html = get_url_info(driver, theaters_url)
 # driver.find_element_by_xpath('//*[@id="contents"]/div[1]/div/ul/li[1]/a').click()
