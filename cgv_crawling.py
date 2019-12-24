@@ -19,30 +19,8 @@ user_agent = 'user-agent='+CgvCrawlingConst.USER_AGENT_WEB
 
 handler = CgvCrawlingHandler()
 
-driver = handler.init_driver(driver_path, user_agent)
-movie_list_html = handler.get_url_info(driver, movies_url)
+handler.init_driver(driver_path, user_agent)
 
-handler.get_text(movie_list_html, CgvCrawlingConst.MOVIE_LIST_SELECTOR)
+handler.get_html(movies_url)
 
-# theater_list_html = get_url_info(driver, theaters_url)
-# driver.find_element_by_xpath('//*[@id="contents"]/div[1]/div/ul/li[1]/a').click()
-
-# 지역
-# get_text(theater_list_html, '#contents > div.sect-common > div > div.sect-city > ul > li > a')
-
-# get_text(theater_list_html, '#contents > div.sect-common > div > div.sect-city > ul > li.on > div > ul > li > a')
-
-
-
-
-# User Agent check
-# user_agent = driver.execute_script("return navigator.userAgent;")
-# print(user_agent)
-# lang = driver.execute_script("return navigator.languages;")
-# print(lang)
-# plugin_length = driver.execute_script("return navigator.plugins.length;")
-# print(plugin_length)
-
-
-
-driver.quit()
+handler.get_movie_list(CgvCrawlingConst.MOVIE_LIST_SELECTOR)
