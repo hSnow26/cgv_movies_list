@@ -1,6 +1,7 @@
 #
 # author : seol <kshzg26@gmail.com>
 # crawling movie list
+# handling webdriver
 #
 # TODO
 # pip install bs4  
@@ -22,24 +23,25 @@ class CgvCrawlingHandler:
         options.add_argument(user_agent)
 
         self.driver = webdriver.Chrome(driver_path, options=options)
+
         return self.driver
 
-    def get_url_info(self, driver, url):
-        driver.get(url)
-        driver.execute_script("Object.defineProperty(navigator, 'plugins', {get: function() {return[1, 2, 3, 4, 5];},});")
+    def get_html(self, url):
+        self.driver.get(url)
+        self.driver.execute_script("Object.defineProperty(navigator, 'plugins', {get: function() {return[1, 2, 3, 4, 5];},});")
 
         # lanuages 속성을 업데이트해주기
-        driver.execute_script("Object.defineProperty(navigator, 'languages', {get: function() {return ['ko-KR', 'ko']}})")
+        self.driver.execute_script("Object.defineProperty(navigator, 'languages', {get: function() {return ['ko-KR', 'ko']}})")
 
         #웹 자원 로드를 시간 기다림
-        driver.implicitly_wait(3)
+        self.driver.implicitly_wait(3)
 
-        html = driver.page_source
+        self.html = self.driver.page_source
 
-        return html
+        return self.html
 
-    def get_text(self, html, selector):
-        soup = BeautifulSoup(html, 'lxml')
+    def get_movie_list(self, selector):
+        soup = BeautifulSoup(self.html, 'lxml')
         contents = soup.select(
             selector
             )
@@ -47,5 +49,7 @@ class CgvCrawlingHandler:
         for content in contents:
             content_list.append(content.text)
             print(content.text)
+
+        self.driver.quit()
 
         return content_list
